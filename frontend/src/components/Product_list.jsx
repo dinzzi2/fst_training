@@ -1,9 +1,32 @@
 // src/components/Product_list.jsx
-
+import {useEffect, useState} from "react"; //capital S si useState
 import React from "react";
 import { products } from "../api/products";
+import axios from "axios";
+import {BASE_URL} from "../api/api_base"
+import { UNSAFE_AwaitContextProvider } from "react-router-dom";
+import Loading from "./Loading.jsx";
 
 const Product_list = () => {
+  const [products, setProducts] = useState([]);
+  const[isLoading,setLoading]=useState(true);
+
+
+useEffect(()=>{
+    const fetchProducts = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/products`);
+    setProducts(response.data);
+    setLoading(false);
+  } catch (error) {
+    console.log("Error fetching products:", error);
+  }
+};
+
+fetchProducts();
+},[]);
+if(isLoading){return <Loading/>}
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-6">
       <h1 className="text-3xl font-bold text-center text-indigo-600 mb-10">
@@ -12,7 +35,7 @@ const Product_list = () => {
 
       {/* 3x3 Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {products.slice(0, 9).map((product) => (
+        {products.slice(0, 9).map((product, index) => (
           <div
             key={product.id}
             className="bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden flex flex-col"
@@ -20,7 +43,7 @@ const Product_list = () => {
             {/* Image */}
             <div className="relative w-full h-48 bg-gray-100">
               <img
-                src={product.image}
+                src={`${BASE_URL}${product.image}`}
                 alt={product.name}
                 className="w-full h-full object-cover"
               />
@@ -37,7 +60,7 @@ const Product_list = () => {
                 </h2>
                 <p className="text-gray-500 text-sm">{product.category}</p>
                 <p className="text-indigo-600 text-xl font-bold mt-2">
-                  {product.price}
+                  {product.product_price}
                 </p>
                 <p className="text-gray-600 text-sm mt-1">
                   {product.description}
