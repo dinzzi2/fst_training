@@ -1,7 +1,9 @@
 // src/pages/Login.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../context/AuthProvider.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { handlelogin } from "../api/Authapi.js"; // adjust the path as needed
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,6 +11,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const nav= useNavigate();
+  const {setIsAuthenticated} = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +25,8 @@ const Login = () => {
       // example: save tokens to localStorage
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
+
+      setIsAuthenticated(true);
 
       if (localStorage.getItem("access")){
         nav("/profile",{replace:true});
