@@ -8,7 +8,7 @@ import Product_list from '../components/Product_list.jsx';
 const Home = () => {
   return (
     <div>
-      <Header />
+      
       <Hero />   
       <ProductGuide />   
       <Product_list />      

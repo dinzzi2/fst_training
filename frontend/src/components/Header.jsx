@@ -63,9 +63,12 @@ const Header = () => {
 
           {/* Buttons (show inline on desktop, stacked on mobile) */}
           <div className="flex flex-col md:flex-row md:space-x-3 mt-2 md:mt-0 px-4 md:px-0">
-            <button className="px-4 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50">
+            <Link
+              to="/login"
+              className="px-4 py-2 border border-blue-700 text-blue-700 rounded-md hover:bg-blue-50">
+             
               Log In
-            </button>
+            </Link>
             <button className="px-4 py-2 bg-blue-700 text-white rounded-md hover:bg-blue-800 mt-2 md:mt-0">
               Sign Up
             </button>

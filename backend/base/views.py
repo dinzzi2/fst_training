@@ -23,7 +23,7 @@ def get_product_detail(request,pk):
 
 # Register user function
 @api_view(['POST'])
-def regiter_user(request):
+def register_user(request):
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -33,7 +33,7 @@ def regiter_user(request):
 
 # Register user function
 @api_view(['POST'])
-def regiter_user(request):
+def register_user(request):
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -52,4 +52,8 @@ def logout_user(request):
         return Response({"detail": "Logout successful."}, status=status.HTTP_205_RESET_CONTENT)
     except Exception as e:
         return Response({"error": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST)
-    
+
+@api_view(['GET']) 
+def profile_view(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
