@@ -1,0 +1,84 @@
+# student1
+
+ssh student1@147.93.107.162 -p 2201
+
+# student2
+
+ssh student2@147.93.107.162 -p 2202
+
+# student3
+
+ssh student3@147.93.107.162 -p 2203
+
+#student 4
+ssh student4@147.93.107.162 -p 2204
+
+
+
+
+asgiref==3.9.1
+certifi==2025.8.3
+cffi==1.17.1
+charset-normalizer==3.4.3
+cryptography==45.0.6
+Django==5.2.4
+django-cors-headers==4.7.0
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.1
+idna==3.10
+pillow==11.3.0
+psycopg2-binary==2.9.10
+pycparser==2.22
+PyJWT==2.10.1
+requests==2.32.4
+sqlparse==0.5.3
+tzdata==2025.2
+urllib3==2.5.0
+
+
+## 5. Backend (Django) per Container
+
+```bash
+cd /home/student/backend
+python3 -m venv venv
+source venv/bin/activate
+
+#nano requirements.txt (copy line 19 to 36 then paste inside)
+#hold ctrl + s to save and ctrl + x to exit
+pip install -r requirements.txt
+
+# nano settings.py
+#go to your settings.py fix the allowedhost set to "*"
+#go to your cors header config and add your frontend domain
+#press ctrl + s to save and ctrl + x to exit
+
+python manage.py migrate
+python manage.py collectstatic --noinput
+gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --daemon
+```
+
+To restart:
+
+```bash
+pkill gunicorn
+gunicorn backend.wsgi:application --bind 0.0.0.0:8000 --daemon
+```
+
+
+
+## 6. Frontend (React) per Container
+
+```bash
+cd /home/student/frontend
+npm install
+npm run build
+sudo npm install -g serve
+serve -s dist -l 3000
+#to run it in background
+nohup serve -s dist -l 3000 > serve.log 2>&1 &
+#to check if its running
+ps aux | grep serve
+#to stop it running
+pkill -f "serve -s dist"
+
+```
