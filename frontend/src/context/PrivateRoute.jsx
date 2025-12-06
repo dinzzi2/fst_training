@@ -4,7 +4,7 @@ import { AuthContext } from "./AuthProvider.jsx";
 import Loading from "../components/Loading.jsx";
 
 export const PrivateRoute = ({children}) => {
-    const {isAuthenticated, isLoading} = userContext(AuthContext)
+    const {isAuthenticated, isLoading} = useContext(AuthContext)
 
     if(isLoading)
         return( <div><Loading/>
